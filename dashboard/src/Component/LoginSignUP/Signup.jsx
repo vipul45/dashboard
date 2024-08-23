@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Signup.css'; // Import the CSS file
 
 // Dummy async function to simulate an API call
@@ -19,6 +19,9 @@ const SignUpPage = ({ togglePage }) => {
     const [passwordStrength, setPasswordStrength] = useState('');
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const navigate = useNavigate(); // Hook to navigate to different pages
 
     const validate = async () => {
         let formErrors = {};
@@ -86,7 +89,10 @@ const SignUpPage = ({ togglePage }) => {
         if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors);
         } else {
+            // Save credentials to local storage
+            localStorage.setItem('credentials', JSON.stringify({ username, password }));
             console.log('Form Submitted', { username, email, password });
+            navigate('/login'); // Redirect to login page
         }
     };
 
@@ -113,26 +119,46 @@ const SignUpPage = ({ togglePage }) => {
                         className="input"
                     />
                     {errors.email && <div className="error">{errors.email}</div>}
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                        className="input"
-                    />
+                    <div className="password-field">
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder="Password"
+                            value={password}
+                            onChange={handlePasswordChange}
+                            className="input"
+                        />
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={showPassword}
+                                onChange={() => setShowPassword(!showPassword)}
+                            />
+                            Show Password
+                        </label>
+                    </div>
                     {errors.password && <div className="error">{errors.password}</div>}
                     {password && (
                         <div className={`password-strength ${passwordStrength.toLowerCase().replace(/\s/g, '-')}`}>
                             Strength: {passwordStrength}
                         </div>
                     )}
-                    <input
-                        type="password"
-                        placeholder="Confirm Password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="input"
-                    />
+                    <div className="password-field">
+                        <input
+                            type={showConfirmPassword ? 'text' : 'password'}
+                            placeholder="Confirm Password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            className="input"
+                        />
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={showConfirmPassword}
+                                onChange={() => setShowConfirmPassword(!showConfirmPassword)}
+                            />
+                            Show Confirm Password
+                        </label>
+                    </div>
                     {errors.confirmPassword && <div className="error">{errors.confirmPassword}</div>}
                     <button type="submit" className="sign-up-button">Sign Up</button>
                     <div className="sign-in">
