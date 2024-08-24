@@ -1,10 +1,14 @@
 // src/components/Modal.js
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Modal.css";
 
 const Modal = ({ isOpen, onClose, farm }) => {
   const [isVisible, setIsVisible] = useState(false);
-
+  const navigate = useNavigate();
+  const handleProceed = () => {
+    navigate(`/farmhealth/${encodeURIComponent(farm.name)}`); // Encode farm name to handle special characters and spaces
+};
   useEffect(() => {
     if (isOpen) {
       setIsVisible(true);
@@ -23,8 +27,9 @@ const Modal = ({ isOpen, onClose, farm }) => {
           &times;
         </button>
         <h2>{farm.name}</h2>
-        <img src={`/images/${farm.image}`} alt={farm.name} className="modal-image" />
+        <img src={`/image/${farm.image}`} alt={farm.name} className="modal-image" />
         <p>Details about {farm.name}</p>
+        <button type="submit" onClick={handleProceed} className="proceed-button">Proceed </button>
       </div>
     </div>
   );

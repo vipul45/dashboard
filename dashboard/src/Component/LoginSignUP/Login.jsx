@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Login.css'; // Import the CSS file
+import { toast } from 'react-toastify';
 
 const LoginPage = ({ togglePage }) => {
     const [username, setUsername] = useState('');
@@ -29,10 +30,11 @@ const LoginPage = ({ togglePage }) => {
             // Check credentials from local storage
             const storedCredentials = JSON.parse(localStorage.getItem('credentials'));
             if (storedCredentials && storedCredentials.username === username && storedCredentials.password === password) {
+                toast("Login Succesfull")
                 console.log('Login Successful');
-                navigate('/success'); // Redirect to success page
+                navigate('/farmlist'); // Redirect to success page
             } else {
-                setErrors({ general: 'Invalid username or password' });
+                toast.error('Invalid username or password')
             }
         }
     };

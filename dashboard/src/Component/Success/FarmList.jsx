@@ -19,7 +19,7 @@ const FarmList = () => {
 
   return (
     <div>
-      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+      <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center",alignItems:"center" }}>
         {farms.map((farm, index) => (
           <FarmCard key={index} farm={farm} onClick={handleCardClick} />
         ))}

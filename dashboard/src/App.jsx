@@ -6,6 +6,8 @@ import Success from "./Component/Success/FarmList";
 import ResetRequest from './Component/LoginSignUP/ResetRequest';
 import ResetConfirmation from './Component/LoginSignUP/ResetConfirmation';
 import FarmList from './Component/Success/FarmList';
+import FarmHealth from './Component/graphs/FarmHealth';
+
 
 function App() {
     return (
@@ -16,7 +18,8 @@ function App() {
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/reset-password" element={<ResetRequest />} />
                 <Route path="/reset-confirmation" element={<ResetConfirmation />} />
-                <Route path="/success" element={<FarmList />} />
+                <Route path="/FarmList" element={<FarmList />} />
+                <Route path="/farmhealth/:farmName" element={<FarmHealth />} />
             </Routes>
         </Router>
     );
